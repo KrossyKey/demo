@@ -1,0 +1,13 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "publish": "ng build --prod --base-href '/demo/' && ngh --branch=gh-pages"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "angular-cli-ghpages": "^0.5.3"
+  }
+}
