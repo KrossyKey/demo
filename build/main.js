@@ -13,7 +13,7 @@ webpackJsonp([7],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(284);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_secure_notes_secure_notes__ = __webpack_require__(210);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngx_translate_core__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_keychain_keychain__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_keychain_keychain__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_settings_settings__ = __webpack_require__(211);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_accounts_accounts__ = __webpack_require__(207);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -116,7 +116,7 @@ var AppComponent = /** @class */ (function () {
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */])
     ], AppComponent.prototype, "nav", void 0);
     AppComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/src/app/app.html"*/'<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <ion-title class = "handwriting">KrossyKey</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n      <button menuClose\n              ion-item\n              *ngFor="let p of pages"\n              (click)="openPage(p)">\n        {{p.title}}\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage"\n         #content\n         swipeBackEnabled="false"></ion-nav>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/src/app/app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/app/app.html"*/'<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <ion-title class = "handwriting">KrossyKey</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n      <button menuClose\n              ion-item\n              *ngFor="let p of pages"\n              (click)="openPage(p)">\n        {{p.title}}\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage"\n         #content\n         swipeBackEnabled="false"></ion-nav>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/app/app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5__ngx_translate_core__["c" /* TranslateService */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */],
@@ -325,13 +325,13 @@ var CryptoProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__types_account__ = __webpack_require__(476);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__secure_items_secure_items__ = __webpack_require__(268);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__schema_account__ = __webpack_require__(157);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_keychain_keychain__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_keychain_keychain__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_component__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_notp__ = __webpack_require__(524);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_notp__ = __webpack_require__(525);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_notp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_notp__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_thirty_two__ = __webpack_require__(611);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_thirty_two__ = __webpack_require__(612);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_thirty_two___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_thirty_two__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_qrcode__ = __webpack_require__(613);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_qrcode__ = __webpack_require__(614);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_qrcode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_qrcode__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_platform_browser__ = __webpack_require__(50);
 var __extends = (this && this.__extends) || (function () {
@@ -459,7 +459,7 @@ var AccountsPage = /** @class */ (function (_super) {
     };
     AccountsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-accounts',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/src/pages/accounts/accounts.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button\n            menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-buttons end\n                 [hidden]="(keychain.storageResp !== 3)">\n      <button ion-button\n              icon-start\n              (click)="addItem()">\n            <ion-icon name="add"></ion-icon>\n        </button>\n    </ion-buttons>\n    <ion-title>{{ \'titles.accounts\' | translate }}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-grid *ngFor="let itemGroupsName of itemGroupsNames(itemGroups)">\n    <h1>\n      {{itemGroupsName}}\n    </h1>\n    <ion-row>\n      <ion-col *ngFor="let item of itemGroups[itemGroupsName]"\n               col-12\n               col-sm-9\n               col-md-6\n               col-lg-4>\n        <ion-card>\n          <ion-item>\n\n            <ion-icon color="primary"\n                      item-start\n                      name="person"></ion-icon>\n\n            <h2>{{item.title}}</h2>\n\n            <p>{{item.userName}}</p>\n\n          </ion-item>\n\n\n          <ion-fab right\n                   top>\n            <button ion-fab\n                    mini><ion-icon name="key"></ion-icon></button>\n\n            <ion-fab-list style="background-color: white;  box-shadow: -3px 3px 10px rgba(0, 0, 0, 0.1);"\n                          side="left">\n\n\n              <button ion-fab\n                      mini\n                      clear\n                      (click)="deleteItem(item)"> \n                                  <ion-icon name="trash"></ion-icon>\n                            </button>\n              <button ion-fab\n                      clear\n                      (click)="editItem(item)"> \n                                  <ion-icon name="create"></ion-icon>\n                            </button>\n              <button [hidden]="(shownItems[item.uuid] !== undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="showCredentials(item)"> \n                                    <ion-icon name="eye"></ion-icon>\n                                  </button>\n\n              <button [hidden]="(shownItems[item.uuid] === undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="hideItem(item.uuid)"> \n                                        <ion-icon name="eye-off"></ion-icon>\n                                      </button>\n\n\n            </ion-fab-list>\n          </ion-fab>\n\n          <ion-card-content>\n\n\n\n            <ion-list [hidden]="shownItems[item.uuid] === undefined">\n              <ion-list-header>\n                <h3>\n                  {{ \'formTitles.password\' | translate }}\n                </h3>\n              </ion-list-header>\n              <p style="padding-left: 15px; padding-right: 15px">\n                {{item.password}}\n              </p>\n              <br>\n              <ion-list-header *ngIf="item.twoFactor">\n                <h3>\n                  {{ \'formTitles.twoFactor\' | translate }}\n                </h3>\n                <ion-item style="padding-top: -400px">\n                  <ion-thumbnail item-start>\n                    <img style="width: 200px; height: 200px"\n                         [src]="sanitizer.bypassSecurityTrustUrl(imgs[item.uuid] ? imgs[item.uuid] : \'\')" />\n                  </ion-thumbnail>\n                </ion-item>\n              </ion-list-header>\n            </ion-list>\n\n          </ion-card-content>\n\n          <ion-row>\n            <ion-col col-xs-4\n                     *ngIf="item.twoFactor">\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(generateToken(item))">\n                  <ion-icon name="lock"></ion-icon>\n                  <div style = "padding-top: 3px">\n\n                  {{ generateToken(item) }}\n                </div>\n\n                  <circle-progress style = "padding-top: 5px"\n                  [percent]="loadPercentage(timeRemaining)"\n                  title=""\n                  units=\'\'        \n                  [radius]="5"\n                  [animation]="false">\n        \n                </circle-progress>\n\n          </button>\n\n            </ion-col>\n\n            <ion-col col-xs-4>\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(item.userName)">\n              <ion-icon name="person"></ion-icon>\n              <div style = "padding-top: 3px">\n\n                  {{ \'formTitles.userName\' | translate }}\n                  </div>\n          </button>\n            </ion-col>\n            <ion-col col-xs-4>\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(item.password)">\n              <ion-icon name="hand"></ion-icon>\n              <div style = "padding-top: 3px">\n\n                  {{ \'formTitles.password\' | translate }}\n                  </div>\n          </button>\n            </ion-col>\n\n\n          </ion-row>\n\n\n        </ion-card>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/src/pages/accounts/accounts.html"*/,
+            selector: 'page-accounts',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/accounts/accounts.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button\n            menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-buttons end\n                 [hidden]="(keychain.storageResp !== 3)">\n      <button ion-button\n              icon-start\n              (click)="addItem()">\n            <ion-icon name="add"></ion-icon>\n        </button>\n    </ion-buttons>\n    <ion-title>{{ \'titles.accounts\' | translate }}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-grid *ngFor="let itemGroupsName of itemGroupsNames(itemGroups)">\n    <h1>\n      {{itemGroupsName}}\n    </h1>\n    <ion-row>\n      <ion-col *ngFor="let item of itemGroups[itemGroupsName]"\n               col-12\n               col-sm-9\n               col-md-6\n               col-lg-4>\n        <ion-card>\n          <ion-item>\n\n            <ion-icon color="primary"\n                      item-start\n                      name="person"></ion-icon>\n\n            <h2>{{item.title}}</h2>\n\n            <p>{{item.userName}}</p>\n\n          </ion-item>\n\n\n          <ion-fab right\n                   top>\n            <button ion-fab\n                    mini><ion-icon name="key"></ion-icon></button>\n\n            <ion-fab-list style="background-color: white;  box-shadow: -3px 3px 10px rgba(0, 0, 0, 0.1);"\n                          side="left">\n\n\n              <button ion-fab\n                      mini\n                      clear\n                      (click)="deleteItem(item)"> \n                                  <ion-icon name="trash"></ion-icon>\n                            </button>\n              <button ion-fab\n                      clear\n                      (click)="editItem(item)"> \n                                  <ion-icon name="create"></ion-icon>\n                            </button>\n              <button [hidden]="(shownItems[item.uuid] !== undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="showCredentials(item)"> \n                                    <ion-icon name="eye"></ion-icon>\n                                  </button>\n\n              <button [hidden]="(shownItems[item.uuid] === undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="hideItem(item.uuid)"> \n                                        <ion-icon name="eye-off"></ion-icon>\n                                      </button>\n\n\n            </ion-fab-list>\n          </ion-fab>\n\n          <ion-card-content>\n\n\n\n            <ion-list [hidden]="shownItems[item.uuid] === undefined">\n              <ion-list-header>\n                <h3>\n                  {{ \'formTitles.password\' | translate }}\n                </h3>\n              </ion-list-header>\n              <p style="padding-left: 15px; padding-right: 15px">\n                {{item.password}}\n              </p>\n              <br>\n              <ion-list-header *ngIf="item.twoFactor">\n                <h3>\n                  {{ \'formTitles.twoFactor\' | translate }}\n                </h3>\n                <ion-item style="padding-top: -400px">\n                  <ion-thumbnail item-start>\n                    <img style="width: 200px; height: 200px"\n                         [src]="sanitizer.bypassSecurityTrustUrl(imgs[item.uuid] ? imgs[item.uuid] : \'\')" />\n                  </ion-thumbnail>\n                </ion-item>\n              </ion-list-header>\n            </ion-list>\n\n          </ion-card-content>\n\n          <ion-row>\n            <ion-col col-xs-4\n                     *ngIf="item.twoFactor">\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(generateToken(item))">\n                  <ion-icon name="lock"></ion-icon>\n                  <div style = "padding-top: 3px">\n\n                  {{ generateToken(item) }}\n                </div>\n\n                  <circle-progress style = "padding-top: 5px"\n                  [percent]="loadPercentage(timeRemaining)"\n                  title=""\n                  units=\'\'        \n                  [radius]="5"\n                  [animation]="false">\n        \n                </circle-progress>\n\n          </button>\n\n            </ion-col>\n\n            <ion-col col-xs-4>\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(item.userName)">\n              <ion-icon name="person"></ion-icon>\n              <div style = "padding-top: 3px">\n\n                  {{ \'formTitles.userName\' | translate }}\n                  </div>\n          </button>\n            </ion-col>\n            <ion-col col-xs-4>\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(item.password)">\n              <ion-icon name="hand"></ion-icon>\n              <div style = "padding-top: 3px">\n\n                  {{ \'formTitles.password\' | translate }}\n                  </div>\n          </button>\n            </ion-col>\n\n\n          </ion-row>\n\n\n        </ion-card>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/accounts/accounts.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */], __WEBPACK_IMPORTED_MODULE_5__providers_keychain_keychain__["a" /* KeychainProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */], __WEBPACK_IMPORTED_MODULE_10__angular_platform_browser__["c" /* DomSanitizer */]])
     ], AccountsPage);
@@ -576,7 +576,7 @@ var ItemEditorPage = /** @class */ (function () {
     };
     ItemEditorPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-item-editor',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/src/pages/item-editor/item-editor.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-buttons start>\n      <button ion-button\n              (click)="dismiss()">\n          <span ion-text>{{ \'options.close\' | translate }}</span>\n        </button>\n    </ion-buttons>\n    <ion-buttons end>\n\n      <button ion-button\n              (click)="save()"\n              [disabled]="!(form.valid)">\n            <span ion-text>{{ \'options.save\' | translate }}</span>\n          </button>\n    </ion-buttons>\n    <ion-title>{{ addItem ? (\'options.add\' | translate) : (\'options.edit\' | translate) }}</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n  <form class="form"\n        [formGroup]="form">\n    <ion-item *ngFor="let property of properties">\n      <ion-label floating>{{ \'formTitles.\' + property | translate }}</ion-label>\n      <ion-input *ngIf="property !== \'body\'"\n                 [(ngModel)]="item[property]"\n                 type="text"\n                 [formControlName]="property"></ion-input>\n      <ion-buttons *ngIf="property === \'password\'"\n                   item-end\n                   middle>\n        <button (click)="presentPasswordGenerator(property)"\n                ion-fab\n                mini><ion-icon name="key"></ion-icon></button>\n      </ion-buttons>\n      <ion-textarea *ngIf="property === \'body\'"\n                    rows="8"\n                    [(ngModel)]="item[property]"\n                    type="text"\n                    [formControlName]="property"\n                    required></ion-textarea>\n\n    </ion-item>\n  </form>\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/src/pages/item-editor/item-editor.html"*/,
+            selector: 'page-item-editor',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/item-editor/item-editor.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-buttons start>\n      <button ion-button\n              (click)="dismiss()">\n          <span ion-text>{{ \'options.close\' | translate }}</span>\n        </button>\n    </ion-buttons>\n    <ion-buttons end>\n\n      <button ion-button\n              (click)="save()"\n              [disabled]="!(form.valid)">\n            <span ion-text>{{ \'options.save\' | translate }}</span>\n          </button>\n    </ion-buttons>\n    <ion-title>{{ addItem ? (\'options.add\' | translate) : (\'options.edit\' | translate) }}</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n  <form class="form"\n        [formGroup]="form">\n    <ion-item *ngFor="let property of properties">\n      <ion-label floating>{{ \'formTitles.\' + property | translate }}</ion-label>\n      <ion-input *ngIf="property !== \'body\'"\n                 [(ngModel)]="item[property]"\n                 type="text"\n                 [formControlName]="property"></ion-input>\n      <ion-buttons *ngIf="property === \'password\'"\n                   item-end\n                   middle>\n        <button (click)="presentPasswordGenerator(property)"\n                ion-fab\n                mini><ion-icon name="key"></ion-icon></button>\n      </ion-buttons>\n      <ion-textarea *ngIf="property === \'body\'"\n                    rows="8"\n                    [(ngModel)]="item[property]"\n                    type="text"\n                    [formControlName]="property"\n                    required></ion-textarea>\n\n    </ion-item>\n  </form>\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/item-editor/item-editor.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_4__providers_localized_toast_localized_toast__["a" /* LocalizedToastProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */]])
@@ -641,7 +641,7 @@ var PasswordGeneratorPage = /** @class */ (function () {
     };
     PasswordGeneratorPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-password-generator',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/src/pages/password-generator/password-generator.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>Password Generator</ion-title>\n\n    <ion-buttons start>\n      <button ion-button\n              (click)="dismiss()">\n            <span ion-text>{{ \'options.dismiss\' | translate }}</span>\n          </button>\n    </ion-buttons>\n    <ion-buttons end>\n      <button ion-button\n              (click)="setPassword(generatedPassword)">\n            <span ion-text>{{ \'options.set\' | translate }}</span>\n          </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <ion-list>\n\n    <ion-item>\n      <ion-label floating>{{ \'options.password\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="generatedPassword"></ion-input>\n    </ion-item>\n\n    <ion-item>\n      <ion-label floating>{{ \'options.options\' | translate }}</ion-label>\n      <ion-select [(ngModel)]="options"\n                  multiple="true"\n                  okText="{{ \'options.ok\' | translate }}"\n                  cancelText="{{ \'options.cancel\' | translate }}"\n                  (ngModelChange)="updatePassword()">\n        <ion-option value="special">{{ \'passwordOptions.special\' | translate }}</ion-option>\n        <ion-option value="numeric">{{ \'passwordOptions.numeric\' | translate }}</ion-option>\n        <ion-option value="upper">{{ \'passwordOptions.upper\' | translate }}</ion-option>\n        <ion-option value="lower">{{ \'passwordOptions.lower\' | translate }}</ion-option>\n      </ion-select>\n    </ion-item>\n\n    <br>\n\n    <ion-item>\n      <ion-range min="10"\n                 max="35"\n                 (ngModelChange)="updatePassword()"\n                 [(ngModel)]="passwordLength">\n        <ion-label range-left>{{ \'options.length\' | translate }}</ion-label>\n        <ion-label range-right>{{passwordLength}}</ion-label>\n      </ion-range>\n    </ion-item>\n\n\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/src/pages/password-generator/password-generator.html"*/,
+            selector: 'page-password-generator',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/password-generator/password-generator.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>Password Generator</ion-title>\n\n    <ion-buttons start>\n      <button ion-button\n              (click)="dismiss()">\n            <span ion-text>{{ \'options.dismiss\' | translate }}</span>\n          </button>\n    </ion-buttons>\n    <ion-buttons end>\n      <button ion-button\n              (click)="setPassword(generatedPassword)">\n            <span ion-text>{{ \'options.set\' | translate }}</span>\n          </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <ion-list>\n\n    <ion-item>\n      <ion-label floating>{{ \'options.password\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="generatedPassword"></ion-input>\n    </ion-item>\n\n    <ion-item>\n      <ion-label floating>{{ \'options.options\' | translate }}</ion-label>\n      <ion-select [(ngModel)]="options"\n                  multiple="true"\n                  okText="{{ \'options.ok\' | translate }}"\n                  cancelText="{{ \'options.cancel\' | translate }}"\n                  (ngModelChange)="updatePassword()">\n        <ion-option value="special">{{ \'passwordOptions.special\' | translate }}</ion-option>\n        <ion-option value="numeric">{{ \'passwordOptions.numeric\' | translate }}</ion-option>\n        <ion-option value="upper">{{ \'passwordOptions.upper\' | translate }}</ion-option>\n        <ion-option value="lower">{{ \'passwordOptions.lower\' | translate }}</ion-option>\n      </ion-select>\n    </ion-item>\n\n    <br>\n\n    <ion-item>\n      <ion-range min="10"\n                 max="35"\n                 (ngModelChange)="updatePassword()"\n                 [(ngModel)]="passwordLength">\n        <ion-label range-left>{{ \'options.length\' | translate }}</ion-label>\n        <ion-label range-right>{{passwordLength}}</ion-label>\n      </ion-range>\n    </ion-item>\n\n\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/password-generator/password-generator.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__providers_password_generator_password_generator__["a" /* PasswordGeneratorProvider */]])
     ], PasswordGeneratorPage);
@@ -662,7 +662,7 @@ var PasswordGeneratorPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__secure_items_secure_items__ = __webpack_require__(268);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__types_secure_note__ = __webpack_require__(523);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__schema_secure_note__ = __webpack_require__(279);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_keychain_keychain__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_keychain_keychain__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_component__ = __webpack_require__(100);
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -707,7 +707,7 @@ var SecureNotesPage = /** @class */ (function (_super) {
     }
     SecureNotesPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-secure-notes',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/src/pages/secure-notes/secure-notes.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button\n            menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n    <ion-buttons end\n                 [hidden]="(keychain.storageResp !== 3)">\n      <button ion-button\n              icon-start\n              (click)="addItem()">\n              <ion-icon name="add"></ion-icon>\n          </button>\n    </ion-buttons>\n    <ion-title>{{ \'titles.secureNotes\' | translate }}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-grid *ngFor="let itemGroupsName of itemGroupsNames(itemGroups)">\n    <h1>\n      {{itemGroupsName}}\n    </h1>\n    <ion-row>\n      <ion-col *ngFor="let item of itemGroups[itemGroupsName]"\n               col-12\n               col-sm-9\n               col-md-6\n               col-lg-4>\n        <ion-card>\n          <ion-item>\n\n            <ion-icon color="primary"\n                      item-start\n                      name="list-box"></ion-icon>\n\n            <h2>{{item.title}}</h2>\n\n          </ion-item>\n\n\n          <ion-fab right\n                   top>\n            <button ion-fab\n                    mini><ion-icon name="key"></ion-icon></button>\n\n            <ion-fab-list style="background-color: white;  box-shadow: -3px 3px 10px rgba(0, 0, 0, 0.1);"\n                          side="left">\n\n\n              <button ion-fab\n                      mini\n                      clear\n                      (click)="deleteItem(item)"> \n                                    <ion-icon name="trash"></ion-icon>\n                              </button>\n              <button ion-fab\n                      clear\n                      (click)="editItem(item)"> \n                                    <ion-icon name="create"></ion-icon>\n                              </button>\n              <button [hidden]="(shownItems[item.uuid] !== undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="showItem(item.uuid)"> \n                                      <ion-icon name="eye"></ion-icon>\n                                    </button>\n\n              <button [hidden]="(shownItems[item.uuid] === undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="hideItem(item.uuid)"> \n                                          <ion-icon name="eye-off"></ion-icon>\n                                        </button>\n\n\n            </ion-fab-list>\n          </ion-fab>\n\n          <ion-card-content>\n\n\n            <ion-list [hidden]="shownItems[item.uuid] === undefined">\n              <ion-list-header>\n                <h3>\n                  {{ \'formTitles.body\' | translate }}\n                </h3>\n              </ion-list-header>\n              <p style="white-space: pre-line;padding-left: 15px; padding-right: 15px">\n                {{item.body}}\n              </p>\n              <br>\n            </ion-list>\n\n          </ion-card-content>\n\n          <ion-row>\n\n\n            <ion-col col-lg-4>\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(item.body)">\n                <ion-icon name="paper"></ion-icon>\n                <div style = "padding-top: 3px">\n  \n                    {{ \'formTitles.body\' | translate }}\n                    </div>\n            </button>\n\n            </ion-col>\n\n          </ion-row>\n\n\n        </ion-card>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/src/pages/secure-notes/secure-notes.html"*/,
+            selector: 'page-secure-notes',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/secure-notes/secure-notes.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button\n            menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n    <ion-buttons end\n                 [hidden]="(keychain.storageResp !== 3)">\n      <button ion-button\n              icon-start\n              (click)="addItem()">\n              <ion-icon name="add"></ion-icon>\n          </button>\n    </ion-buttons>\n    <ion-title>{{ \'titles.secureNotes\' | translate }}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-grid *ngFor="let itemGroupsName of itemGroupsNames(itemGroups)">\n    <h1>\n      {{itemGroupsName}}\n    </h1>\n    <ion-row>\n      <ion-col *ngFor="let item of itemGroups[itemGroupsName]"\n               col-12\n               col-sm-9\n               col-md-6\n               col-lg-4>\n        <ion-card>\n          <ion-item>\n\n            <ion-icon color="primary"\n                      item-start\n                      name="list-box"></ion-icon>\n\n            <h2>{{item.title}}</h2>\n\n          </ion-item>\n\n\n          <ion-fab right\n                   top>\n            <button ion-fab\n                    mini><ion-icon name="key"></ion-icon></button>\n\n            <ion-fab-list style="background-color: white;  box-shadow: -3px 3px 10px rgba(0, 0, 0, 0.1);"\n                          side="left">\n\n\n              <button ion-fab\n                      mini\n                      clear\n                      (click)="deleteItem(item)"> \n                                    <ion-icon name="trash"></ion-icon>\n                              </button>\n              <button ion-fab\n                      clear\n                      (click)="editItem(item)"> \n                                    <ion-icon name="create"></ion-icon>\n                              </button>\n              <button [hidden]="(shownItems[item.uuid] !== undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="showItem(item.uuid)"> \n                                      <ion-icon name="eye"></ion-icon>\n                                    </button>\n\n              <button [hidden]="(shownItems[item.uuid] === undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="hideItem(item.uuid)"> \n                                          <ion-icon name="eye-off"></ion-icon>\n                                        </button>\n\n\n            </ion-fab-list>\n          </ion-fab>\n\n          <ion-card-content>\n\n\n            <ion-list [hidden]="shownItems[item.uuid] === undefined">\n              <ion-list-header>\n                <h3>\n                  {{ \'formTitles.body\' | translate }}\n                </h3>\n              </ion-list-header>\n              <p style="white-space: pre-line;padding-left: 15px; padding-right: 15px">\n                {{item.body}}\n              </p>\n              <br>\n            </ion-list>\n\n          </ion-card-content>\n\n          <ion-row>\n\n\n            <ion-col col-lg-4>\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(item.body)">\n                <ion-icon name="paper"></ion-icon>\n                <div style = "padding-top: 3px">\n  \n                    {{ \'formTitles.body\' | translate }}\n                    </div>\n            </button>\n\n            </ion-col>\n\n          </ion-row>\n\n\n        </ion-card>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/secure-notes/secure-notes.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */], __WEBPACK_IMPORTED_MODULE_5__providers_keychain_keychain__["a" /* KeychainProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */]])
     ], SecureNotesPage);
@@ -724,7 +724,7 @@ var SecureNotesPage = /** @class */ (function (_super) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SettingsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_keychain_keychain__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_keychain_keychain__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_localized_toast_localized_toast__ = __webpack_require__(97);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -763,9 +763,16 @@ var SettingsPage = /** @class */ (function () {
             }
         });
     };
+    SettingsPage.prototype.removeKeychain = function () {
+        this.keychainProvider.removeKeychain();
+        location.reload();
+    };
+    SettingsPage.prototype.exportKeychain = function () {
+        this.keychainProvider.exportKeychain();
+    };
     SettingsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-settings',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/src/pages/settings/settings.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button\n            menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n\n    <ion-title>{{ \'titles.settings\' | translate }}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-list>\n    <ion-list-header>\n      <h1>\n        {{ \'options.changePassword\' | translate }}\n      </h1>\n    </ion-list-header>\n\n    <ion-item>\n      <ion-label>{{ \'options.passwordOld\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="oldPass"\n                 type="password"></ion-input>\n    </ion-item>\n\n    <ion-item>\n      <ion-label>{{ \'options.passwordNew\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="newPass"\n                 type="password"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{ \'options.confirm\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="confPass"\n                 type="password"></ion-input>\n    </ion-item>\n\n    <br>\n\n    <button (click)="changePassword(oldPass,newPass)"\n            [disabled]="!(oldPass !== \'\' && newPass !== \'\' && newPass === confPass)"\n            ion-button\n            block>{{ \'options.changePassword\' | translate }}</button>\n\n\n\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/src/pages/settings/settings.html"*/,
+            selector: 'page-settings',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/settings/settings.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button\n            menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n\n    <ion-title>{{ \'titles.settings\' | translate }}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-list>\n    <ion-list-header>\n      <h1>\n        {{ \'options.changePassword\' | translate }}\n      </h1>\n    </ion-list-header>\n\n    <ion-item>\n      <ion-label>{{ \'options.passwordOld\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="oldPass"\n                 type="password"></ion-input>\n    </ion-item>\n\n    <ion-item>\n      <ion-label>{{ \'options.passwordNew\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="newPass"\n                 type="password"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{ \'options.confirm\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="confPass"\n                 type="password"></ion-input>\n    </ion-item>\n\n    <br>\n\n    <button (click)="changePassword(oldPass,newPass)"\n            [disabled]="!(oldPass !== \'\' && newPass !== \'\' && newPass === confPass)"\n            ion-button\n            block>{{ \'options.changePassword\' | translate }}</button>\n    <br>\n\n    <button (click)="removeKeychain()"\n            ion-button\n            block>{{ \'options.removeKeychain\' | translate }}</button>\n    \n    <br>\n\n    <button (click)="exportKeychain()"\n            ion-button\n            block>{{ \'options.exportKeychain\' | translate }}</button>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/settings/settings.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_keychain_keychain__["a" /* KeychainProvider */], __WEBPACK_IMPORTED_MODULE_2__providers_localized_toast_localized_toast__["a" /* LocalizedToastProvider */]])
     ], SettingsPage);
@@ -783,6 +790,7 @@ var SettingsPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthenticatePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_keychain_keychain__ = __webpack_require__(53);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -794,13 +802,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var AuthenticatePage = /** @class */ (function () {
     /**
      * Intializes EditPasswordPage
      * @param viewCtrl View Controller
      * @param navParams Navigation Parameters
      */
-    function AuthenticatePage(viewCtrl, navParams) {
+    function AuthenticatePage(keychainProvider, viewCtrl, navParams) {
+        this.keychainProvider = keychainProvider;
         this.viewCtrl = viewCtrl;
         this.navParams = navParams;
         /**
@@ -814,11 +824,18 @@ var AuthenticatePage = /** @class */ (function () {
     AuthenticatePage.prototype.passKeychain = function () {
         this.viewCtrl.dismiss(this.passphrase);
     };
+    /**
+     * Removes Keychain
+     */
+    AuthenticatePage.prototype.removeKeychain = function () {
+        this.keychainProvider.removeKeychain();
+        location.reload();
+    };
     AuthenticatePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-authenticate',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/src/pages/authenticate/authenticate.html"*/'<!--\n  Generated template for the AuthenticatePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons end>\n\n      <button ion-button\n              (click)="passKeychain()"\n              [disabled]="passphrase.length === 0">\n            <span ion-text>{{ \'options.unlock\' | translate }}</span>\n          </button>\n    </ion-buttons>\n    <ion-title>Unlock Keychain</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-list>\n\n    <ion-item>\n      <ion-label floating>Passphrase</ion-label>\n      <ion-input type="password"\n                 [(ngModel)]="passphrase"></ion-input>\n    </ion-item>\n\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/src/pages/authenticate/authenticate.html"*/,
+            selector: 'page-authenticate',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/authenticate/authenticate.html"*/'<!--\n  Generated template for the AuthenticatePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons start>\n      <button ion-button\n              (click)="removeKeychain()">\n            <p ion-text>{{ \'options.remove\' | translate }}</p>\n          </button>\n    </ion-buttons>\n\n    <ion-buttons end>\n      <button ion-button\n              (click)="passKeychain()"\n              [disabled]="passphrase.length === 0">\n            <span ion-text>{{ \'options.unlock\' | translate }}</span>\n          </button>\n    </ion-buttons>\n    <ion-title>Unlock Keychain</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-list>\n\n    <ion-item>\n      <ion-label floating>Passphrase</ion-label>\n      <ion-input type="password"\n                 [(ngModel)]="passphrase"></ion-input>\n    </ion-item>\n\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/authenticate/authenticate.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_keychain_keychain__["a" /* KeychainProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
     ], AuthenticatePage);
     return AuthenticatePage;
 }());
@@ -883,7 +900,7 @@ var NewKeychainPage = /** @class */ (function () {
     };
     NewKeychainPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-new-keychain',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/src/pages/new-keychain/new-keychain.html"*/'<!--\n  Generated template for the AuthenticatePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>Configure Keychain</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-list>\n\n    <ion-label>\n      <h3 style="text-align: center">Create Keychain</h3>\n    </ion-label>\n    <ion-item>\n      <ion-label floating>Passphrase</ion-label>\n      <ion-input type="password"\n                 [(ngModel)]="passphrase"></ion-input>\n    </ion-item>\n\n    <ion-item>\n      <button (click)="createKeychain(passphrase)"\n              [disabled]="passphrase.length === 0"\n              ion-button\n              full>Create</button>\n    </ion-item>\n\n    <br>\n\n    <ion-label>\n      <h5 style="text-align: center">OR</h5>\n    </ion-label>\n\n    <br>\n\n    <ion-label>\n      <h3 style="text-align: center">Import Keychain</h3>\n    </ion-label>\n\n    <ion-item>\n      <label for="file-upload"\n             ion-button\n             full>\n            Import\n         </label>\n      <input (change)="importKeychain($event.target.files[0])"\n             id="file-upload"\n             accept=".kk"\n             type="file" />\n    </ion-item>\n\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/src/pages/new-keychain/new-keychain.html"*/,
+            selector: 'page-new-keychain',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/new-keychain/new-keychain.html"*/'<!--\n  Generated template for the AuthenticatePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>Configure Keychain</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-list>\n\n    <ion-label>\n      <h3 style="text-align: center">Create Keychain</h3>\n    </ion-label>\n    <ion-item>\n      <ion-label floating>Passphrase</ion-label>\n      <ion-input type="password"\n                 [(ngModel)]="passphrase"></ion-input>\n    </ion-item>\n\n    <ion-item>\n      <button (click)="createKeychain(passphrase)"\n              [disabled]="passphrase.length === 0"\n              ion-button\n              full>Create</button>\n    </ion-item>\n\n    <br>\n\n    <ion-label>\n      <h5 style="text-align: center">OR</h5>\n    </ion-label>\n\n    <br>\n\n    <ion-label>\n      <h3 style="text-align: center">Import Keychain</h3>\n    </ion-label>\n\n    <ion-item>\n      <label for="file-upload"\n             ion-button\n             full>\n            Import\n         </label>\n      <input (change)="importKeychain($event.target.files[0])"\n             id="file-upload"\n             accept=".kk"\n             type="file" />\n    </ion-item>\n\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/new-keychain/new-keychain.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */],
             __WEBPACK_IMPORTED_MODULE_2__providers_crypto_crypto__["a" /* CryptoProvider */], __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]])
@@ -917,31 +934,31 @@ webpackEmptyAsyncContext.id = 223;
 
 var map = {
 	"../pages/accounts/accounts.module": [
-		933,
+		934,
 		6
 	],
 	"../pages/authenticate/authenticate.module": [
-		934,
+		935,
 		5
 	],
 	"../pages/item-editor/item-editor.module": [
-		935,
+		936,
 		4
 	],
 	"../pages/new-keychain/new-keychain.module": [
-		936,
+		937,
 		3
 	],
 	"../pages/password-generator/password-generator.module": [
-		937,
+		938,
 		2
 	],
 	"../pages/secure-notes/secure-notes.module": [
-		938,
+		939,
 		1
 	],
 	"../pages/settings/settings.module": [
-		939,
+		940,
 		0
 	]
 };
@@ -972,7 +989,7 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__item_editor_item_editor__ = __webpack_require__(208);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_object_hash__ = __webpack_require__(512);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_object_hash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_object_hash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_keychain_keychain__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_keychain_keychain__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__authenticate_authenticate__ = __webpack_require__(212);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__new_keychain_new_keychain__ = __webpack_require__(213);
 
@@ -1394,13 +1411,13 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(280);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(284);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_secure_notes_secure_notes__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_common_http__ = __webpack_require__(651);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_common_http__ = __webpack_require__(652);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ngx_translate_core__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ngx_translate_http_loader__ = __webpack_require__(652);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ngx_translate_http_loader__ = __webpack_require__(653);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_item_editor_item_editor__ = __webpack_require__(208);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_ng_circle_progress__ = __webpack_require__(654);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_ng_circle_progress__ = __webpack_require__(655);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_storage__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_keychain_keychain__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_keychain_keychain__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__providers_localized_toast_localized_toast__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_authenticate_authenticate__ = __webpack_require__(212);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__providers_crypto_crypto__ = __webpack_require__(161);
@@ -1589,35 +1606,14 @@ var SECURE_NOTE_DEFAULT = {
 
 /***/ }),
 
-/***/ 528:
+/***/ 529:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 530:
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 564:
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 565:
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 60:
+/***/ 53:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1633,6 +1629,8 @@ var SECURE_NOTE_DEFAULT = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__crypto_crypto__ = __webpack_require__(161);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_secure_storage__ = __webpack_require__(285);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_downloadjs__ = __webpack_require__(524);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_downloadjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_downloadjs__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1642,6 +1640,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1851,6 +1850,17 @@ var KeychainProvider = /** @class */ (function () {
     KeychainProvider.prototype.deleteKeychainPath = function () {
         this.storage.remove('keychainFilePath');
     };
+    KeychainProvider.prototype.removeKeychain = function () {
+        //For Browsers
+        this.deleteKeychainPath();
+        this.storage.remove('keychain');
+    };
+    KeychainProvider.prototype.exportKeychain = function () {
+        //For Browsers
+        this.getRawKeychain().then(function (keychain) {
+            __WEBPACK_IMPORTED_MODULE_10_downloadjs___default()(keychain, "keychain.kk", "text/plain");
+        });
+    };
     KeychainProvider.prototype.getKeychainPath = function () {
         return this.storage.get('keychainFilePath');
     };
@@ -1907,6 +1917,27 @@ var KeychainProvider = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=keychain.js.map
+
+/***/ }),
+
+/***/ 531:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 565:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 566:
+/***/ (function(module, exports) {
+
+/* (ignored) */
 
 /***/ }),
 

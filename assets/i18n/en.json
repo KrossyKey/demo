@@ -37,10 +37,13 @@
         "ok": "Okay",
         "done": "Done",
         "set": "Set",
+        "remove": "Remove",
         "cancel": "Cancel",
         "confirm": "Confirm",
         "changePassword": "Change Password",
-        "exportKeychain": "Export Keychain"
+        "exportKeychain": "Export Keychain",
+        "removeKeychain": "Remove Keychain"
+
     },
 
     "formTitles" : {
