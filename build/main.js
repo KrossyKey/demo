@@ -294,8 +294,8 @@ var CryptoProvider = /** @class */ (function () {
         return window.crypto.subtle.deriveKey({
             "name": "PBKDF2",
             salt: salt,
-            iterations: 2000,
-            hash: { name: "SHA-256" },
+            iterations: 45000,
+            hash: { name: "SHA-512" },
         }, importedKey, //your key from generateKey or importKey
         {
             name: "AES-GCM",
@@ -1312,7 +1312,10 @@ var PasswordGeneratorProvider = /** @class */ (function () {
             passwordSelectionArray = passwordSelectionArray.concat(specialChar);
         }
         while (password.length < length) {
-            password += passwordSelectionArray[Math.ceil((passwordSelectionArray.length - 1) * Math.random())];
+            var arr = new Uint32Array(1);
+            crypto.getRandomValues(arr);
+            var randonVal = arr[0] * Math.pow(2, -32);
+            password += passwordSelectionArray[Math.ceil((passwordSelectionArray.length - 1) * randonVal)];
         }
         return password;
     };
