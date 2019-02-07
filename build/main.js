@@ -1,4 +1,4 @@
-webpackJsonp([7],{
+webpackJsonp([6],{
 
 /***/ 100:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -9,13 +9,13 @@ webpackJsonp([7],{
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(284);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_secure_notes_secure_notes__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngx_translate_core__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_keychain_keychain__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_secure_notes_secure_notes__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngx_translate_core__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_keychain_keychain__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_settings_settings__ = __webpack_require__(211);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_accounts_accounts__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_accounts_accounts__ = __webpack_require__(284);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -116,7 +116,7 @@ var AppComponent = /** @class */ (function () {
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */])
     ], AppComponent.prototype, "nav", void 0);
     AppComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/app/app.html"*/'<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <ion-title class = "handwriting">KrossyKey</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n      <button menuClose\n              ion-item\n              *ngFor="let p of pages"\n              (click)="openPage(p)">\n        {{p.title}}\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage"\n         #content\n         swipeBackEnabled="false"></ion-nav>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/app/app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/afshawnlotfi/Desktop/krossykey/src/app/app.html"*/'<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <ion-title class = "handwriting">KrossyKey</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n      <button menuClose\n              ion-item\n              *ngFor="let p of pages"\n              (click)="openPage(p)">\n        {{p.title}}\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage"\n         #content\n         swipeBackEnabled="false"></ion-nav>\n'/*ion-inline-end:"/Users/afshawnlotfi/Desktop/krossykey/src/app/app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5__ngx_translate_core__["c" /* TranslateService */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */],
@@ -131,7 +131,7 @@ var AppComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 157:
+/***/ 150:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -172,7 +172,7 @@ var ACCOUNT_SCHEMA = {
 
 /***/ }),
 
-/***/ 161:
+/***/ 160:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -197,28 +197,35 @@ var CryptoProvider = /** @class */ (function () {
     CryptoProvider.prototype.decryptStringFromPhrase = function (passphrase, encodedData) {
         var _this = this;
         return this.importKey(passphrase).then(function (importedKey) {
+            console.log(importedKey);
             return _this.decryptStringFromKey(importedKey, encodedData);
         });
     };
     CryptoProvider.prototype.decryptStringFromKey = function (importedKey, encodedData) {
         var _this = this;
         //Decode string
-        var decoded = this.stringToArrayBuffer(window.atob(encodedData));
-        var salt = decoded.slice(0, 16);
-        var data = decoded.slice(16);
-        return this.deriveKey(importedKey, salt).then(function (key) {
-            return window.crypto.subtle.decrypt({
-                name: "AES-GCM",
-                iv: salt,
-                tagLength: 128,
-            }, key, data)
-                .then(function (decrypted) {
-                return JSON.parse(_this.bufferToString(new Uint8Array(decrypted)));
-            })
-                .catch(function (error) {
-                return null;
+        try {
+            var decoded = this.stringToArrayBuffer(window.atob(encodedData));
+            var salt_1 = decoded.slice(0, 16);
+            var data_1 = decoded.slice(16);
+            return this.deriveKey(importedKey, salt_1).then(function (key) {
+                return window.crypto.subtle.decrypt({
+                    name: "AES-GCM",
+                    iv: salt_1,
+                    tagLength: 128,
+                }, key, data_1)
+                    .then(function (decrypted) {
+                    console.log(decrypted);
+                    return JSON.parse(_this.bufferToString(new Uint8Array(decrypted)));
+                })
+                    .catch(function (error) {
+                    return null;
+                });
             });
-        });
+        }
+        catch (_a) {
+            return null;
+        }
     };
     CryptoProvider.prototype.encryptObjectFromPhrase = function (passphrase, object) {
         var _this = this;
@@ -315,25 +322,79 @@ var CryptoProvider = /** @class */ (function () {
 
 /***/ }),
 
+/***/ 206:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthenticatePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_keychain_keychain__ = __webpack_require__(47);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var AuthenticatePage = /** @class */ (function () {
+    /**
+     * Intializes EditPasswordPage
+     * @param viewCtrl View Controller
+     * @param navParams Navigation Parameters
+     */
+    function AuthenticatePage(keychainProvider, viewCtrl, navParams) {
+        this.keychainProvider = keychainProvider;
+        this.viewCtrl = viewCtrl;
+        this.navParams = navParams;
+        /**
+         * Passphrase to authenticate
+         */
+        this.passphrase = "";
+    }
+    /**
+     * Passes Passphrase to keychain
+     */
+    AuthenticatePage.prototype.passKeychain = function () {
+        this.viewCtrl.dismiss(this.passphrase);
+    };
+    /**
+     * Removes Keychain
+     */
+    AuthenticatePage.prototype.removeKeychain = function () {
+        this.keychainProvider.removeKeychain();
+        location.reload();
+    };
+    AuthenticatePage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-authenticate',template:/*ion-inline-start:"/Users/afshawnlotfi/Desktop/krossykey/src/pages/authenticate/authenticate.html"*/'<!--\n  Generated template for the AuthenticatePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons start>\n      <button ion-button\n              (click)="removeKeychain()">\n            <p ion-text>{{ \'options.remove\' | translate }}</p>\n          </button>\n    </ion-buttons>\n\n    <ion-buttons end>\n      <button ion-button\n              (click)="passKeychain()"\n              [disabled]="passphrase.length === 0">\n            <span ion-text>{{ \'options.unlock\' | translate }}</span>\n          </button>\n    </ion-buttons>\n    <ion-title>Unlock Keychain</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-list>\n\n    <ion-item>\n      <ion-label floating>Passphrase</ion-label>\n      <ion-input type="password"\n                 [(ngModel)]="passphrase"></ion-input>\n    </ion-item>\n\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Desktop/krossykey/src/pages/authenticate/authenticate.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_keychain_keychain__["a" /* KeychainProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
+    ], AuthenticatePage);
+    return AuthenticatePage;
+}());
+
+//# sourceMappingURL=authenticate.js.map
+
+/***/ }),
+
 /***/ 207:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountsPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SecureNotesPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__types_account__ = __webpack_require__(476);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__secure_items_secure_items__ = __webpack_require__(268);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__schema_account__ = __webpack_require__(157);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_keychain_keychain__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__secure_items_secure_items__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__types_secure_note__ = __webpack_require__(522);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__schema_secure_note__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_keychain_keychain__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_component__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_notp__ = __webpack_require__(525);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_notp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_notp__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_thirty_two__ = __webpack_require__(612);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_thirty_two___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_thirty_two__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_qrcode__ = __webpack_require__(614);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_qrcode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_qrcode__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_platform_browser__ = __webpack_require__(50);
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -360,113 +421,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
-
-
 /**
  * Page for displaying passwords
  */
-var AccountsPage = /** @class */ (function (_super) {
-    __extends(AccountsPage, _super);
+var SecureNotesPage = /** @class */ (function (_super) {
+    __extends(SecureNotesPage, _super);
     /**
-     * Intializes __PasswordsPage__
+     * Intializes __SecureNotesPage__
      * @param modalCtrl Modal Controller
      * @param keychain Keychain Provider
      */
-    function AccountsPage(modalCtrl, keychain, platform, sanitizer) {
-        var _this = _super.call(this, modalCtrl, keychain, __WEBPACK_IMPORTED_MODULE_4__schema_account__["a" /* ACCOUNT_SCHEMA */], __WEBPACK_IMPORTED_MODULE_6__app_app_component__["c" /* StorageID */].accounts, platform) || this;
-        _this.sanitizer = sanitizer;
-        /**
-         * Two Factor step
-         */
-        _this.step = 30;
-        /**
-         * Barcode Images
-         */
-        _this.imgs = {};
-        /**
-         * Time remaining
-         */
-        _this.timeRemaining = 0;
-        /**
-         * Account defaults
-         */
-        _this.objectDefaults = __WEBPACK_IMPORTED_MODULE_2__types_account__["a" /* ACCOUNT_DEFAULT */];
-        _this.calcTimeRemaining();
+    function SecureNotesPage(modalCtrl, keychain, platform) {
+        var _this = _super.call(this, modalCtrl, keychain, __WEBPACK_IMPORTED_MODULE_4__schema_secure_note__["a" /* SECURE_NOTE_SCHEMA */], __WEBPACK_IMPORTED_MODULE_6__app_app_component__["c" /* StorageID */].secureNotes, platform) || this;
+        _this.objectDefaults = __WEBPACK_IMPORTED_MODULE_3__types_secure_note__["a" /* SECURE_NOTE_DEFAULT */];
         return _this;
     }
-    /**
-     * Generates Token from secret key
-     * @param twoFactorModel Model of Two Factor Identified
-     */
-    AccountsPage.prototype.generateToken = function (account) {
-        if (account.twoFactor) {
-            var unformatted = account.twoFactor.replace(/\W+/g, '').toUpperCase();
-            var bin = __WEBPACK_IMPORTED_MODULE_8_thirty_two___default.a.decode(unformatted);
-            return __WEBPACK_IMPORTED_MODULE_7_notp___default.a.totp.gen(bin);
-        }
-        else {
-            return NaN;
-        }
-    };
-    AccountsPage.prototype.loadPercentage = function (timeLeft) {
-        return ((this.step - timeLeft) / 30) * 100;
-    };
-    /**
-     * Generates QR Code
-     * @param twoFactor Two Factor Identified
-     */
-    AccountsPage.prototype.generateQrCode = function (account) {
-        var _this = this;
-        __WEBPACK_IMPORTED_MODULE_9_qrcode___default.a.toDataURL(this.barCodeUrl(account), function (err, imageUrl) {
-            if (imageUrl) {
-                _this.imgs[account.uuid] = imageUrl;
-            }
-        });
-    };
-    AccountsPage.prototype.calcTimeRemaining = function () {
-        var _this = this;
-        var date = new Date();
-        var epoch = date.getTime();
-        this.timeRemaining = this.step - Math.floor(epoch / 1000) % this.step;
-        setTimeout(function () {
-            _this.calcTimeRemaining();
-        }, 1000);
-    };
-    /**
-     * Shows barcode
-     * @param twoFactor Two Factor Identified
-     */
-    AccountsPage.prototype.showCredentials = function (account) {
-        this.generateQrCode(account);
-        this.showItem(account.uuid);
-    };
-    /**
-     * Barcode URL
-     * @param twoFactorModel Two Factor Identified Model
-     * @returns Bar code url
-     */
-    AccountsPage.prototype.barCodeUrl = function (account) {
-        if (account.twoFactor) {
-            return 'otpauth://totp/'
-                + encodeURI(account.userName || '')
-                + '?secret=' + account.twoFactor.replace(/[\s\.\_\-]+/g, '').toUpperCase()
-                + '&algorithm=' + ('SHA1')
-                + '&digits=' + (6)
-                + '&period=' + (this.step);
-        }
-    };
-    AccountsPage = __decorate([
+    SecureNotesPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-accounts',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/accounts/accounts.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button\n            menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-buttons end\n                 [hidden]="(keychain.storageResp !== 3)">\n      <button ion-button\n              icon-start\n              (click)="addItem()">\n            <ion-icon name="add"></ion-icon>\n        </button>\n    </ion-buttons>\n    <ion-title>{{ \'titles.accounts\' | translate }}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-grid *ngFor="let itemGroupsName of itemGroupsNames(itemGroups)">\n    <h1>\n      {{itemGroupsName}}\n    </h1>\n    <ion-row>\n      <ion-col *ngFor="let item of itemGroups[itemGroupsName]"\n               col-12\n               col-sm-9\n               col-md-6\n               col-lg-4>\n        <ion-card>\n          <ion-item>\n\n            <ion-icon color="primary"\n                      item-start\n                      name="person"></ion-icon>\n\n            <h2>{{item.title}}</h2>\n\n            <p>{{item.userName}}</p>\n\n          </ion-item>\n\n\n          <ion-fab right\n                   top>\n            <button ion-fab\n                    mini><ion-icon name="key"></ion-icon></button>\n\n            <ion-fab-list style="background-color: white;  box-shadow: -3px 3px 10px rgba(0, 0, 0, 0.1);"\n                          side="left">\n\n\n              <button ion-fab\n                      mini\n                      clear\n                      (click)="deleteItem(item)"> \n                                  <ion-icon name="trash"></ion-icon>\n                            </button>\n              <button ion-fab\n                      clear\n                      (click)="editItem(item)"> \n                                  <ion-icon name="create"></ion-icon>\n                            </button>\n              <button [hidden]="(shownItems[item.uuid] !== undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="showCredentials(item)"> \n                                    <ion-icon name="eye"></ion-icon>\n                                  </button>\n\n              <button [hidden]="(shownItems[item.uuid] === undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="hideItem(item.uuid)"> \n                                        <ion-icon name="eye-off"></ion-icon>\n                                      </button>\n\n\n            </ion-fab-list>\n          </ion-fab>\n\n          <ion-card-content>\n\n\n\n            <ion-list [hidden]="shownItems[item.uuid] === undefined">\n              <ion-list-header>\n                <h3>\n                  {{ \'formTitles.password\' | translate }}\n                </h3>\n              </ion-list-header>\n              <p style="padding-left: 15px; padding-right: 15px">\n                {{item.password}}\n              </p>\n              <br>\n              <ion-list-header *ngIf="item.twoFactor">\n                <h3>\n                  {{ \'formTitles.twoFactor\' | translate }}\n                </h3>\n                <ion-item style="padding-top: -400px">\n                  <ion-thumbnail item-start>\n                    <img style="width: 200px; height: 200px"\n                         [src]="sanitizer.bypassSecurityTrustUrl(imgs[item.uuid] ? imgs[item.uuid] : \'\')" />\n                  </ion-thumbnail>\n                </ion-item>\n              </ion-list-header>\n            </ion-list>\n\n          </ion-card-content>\n\n          <ion-row>\n            <ion-col col-xs-4\n                     *ngIf="item.twoFactor">\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(generateToken(item))">\n                  <ion-icon name="lock"></ion-icon>\n                  <div style = "padding-top: 3px">\n\n                  {{ generateToken(item) }}\n                </div>\n\n                  <circle-progress style = "padding-top: 5px"\n                  [percent]="loadPercentage(timeRemaining)"\n                  title=""\n                  units=\'\'        \n                  [radius]="5"\n                  [animation]="false">\n        \n                </circle-progress>\n\n          </button>\n\n            </ion-col>\n\n            <ion-col col-xs-4>\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(item.userName)">\n              <ion-icon name="person"></ion-icon>\n              <div style = "padding-top: 3px">\n\n                  {{ \'formTitles.userName\' | translate }}\n                  </div>\n          </button>\n            </ion-col>\n            <ion-col col-xs-4>\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(item.password)">\n              <ion-icon name="hand"></ion-icon>\n              <div style = "padding-top: 3px">\n\n                  {{ \'formTitles.password\' | translate }}\n                  </div>\n          </button>\n            </ion-col>\n\n\n          </ion-row>\n\n\n        </ion-card>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/accounts/accounts.html"*/,
+            selector: 'page-secure-notes',template:/*ion-inline-start:"/Users/afshawnlotfi/Desktop/krossykey/src/pages/secure-notes/secure-notes.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button\n            menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n    <ion-buttons end\n                 [hidden]="(keychain.storageResp !== 3)">\n      <button ion-button\n              icon-start\n              (click)="addItem()">\n              <ion-icon name="add"></ion-icon>\n          </button>\n    </ion-buttons>\n    <ion-title>{{ \'titles.secureNotes\' | translate }}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-grid *ngFor="let itemGroupsName of itemGroupsNames(itemGroups)">\n    <h1>\n      {{itemGroupsName}}\n    </h1>\n    <ion-row>\n      <ion-col *ngFor="let item of itemGroups[itemGroupsName]"\n               col-12\n               col-sm-9\n               col-md-6\n               col-lg-4>\n        <ion-card>\n          <ion-item>\n\n            <ion-icon color="primary"\n                      item-start\n                      name="list-box"></ion-icon>\n\n            <h2>{{item.title}}</h2>\n\n          </ion-item>\n\n\n          <ion-fab right\n                   top>\n            <button ion-fab\n                    mini><ion-icon name="key"></ion-icon></button>\n\n            <ion-fab-list style="background-color: white;  box-shadow: -3px 3px 10px rgba(0, 0, 0, 0.1);"\n                          side="left">\n\n\n              <button ion-fab\n                      mini\n                      clear\n                      (click)="deleteItem(item)"> \n                                    <ion-icon name="trash"></ion-icon>\n                              </button>\n              <button ion-fab\n                      clear\n                      (click)="editItem(item)"> \n                                    <ion-icon name="create"></ion-icon>\n                              </button>\n              <button [hidden]="(shownItems[item.uuid] !== undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="showItem(item.uuid)"> \n                                      <ion-icon name="eye"></ion-icon>\n                                    </button>\n\n              <button [hidden]="(shownItems[item.uuid] === undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="hideItem(item.uuid)"> \n                                          <ion-icon name="eye-off"></ion-icon>\n                                        </button>\n\n\n            </ion-fab-list>\n          </ion-fab>\n\n          <ion-card-content>\n\n\n            <ion-list [hidden]="shownItems[item.uuid] === undefined">\n              <ion-list-header>\n                <h3>\n                  {{ \'formTitles.body\' | translate }}\n                </h3>\n              </ion-list-header>\n              <p style="white-space: pre-line;padding-left: 15px; padding-right: 15px">\n                {{item.body}}\n              </p>\n              <br>\n            </ion-list>\n\n          </ion-card-content>\n\n          <ion-row>\n\n\n            <ion-col col-lg-4>\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(item.body)">\n                <ion-icon name="paper"></ion-icon>\n                <div style = "padding-top: 3px">\n  \n                    {{ \'formTitles.body\' | translate }}\n                    </div>\n            </button>\n\n            </ion-col>\n\n          </ion-row>\n\n\n        </ion-card>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Desktop/krossykey/src/pages/secure-notes/secure-notes.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */], __WEBPACK_IMPORTED_MODULE_5__providers_keychain_keychain__["a" /* KeychainProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */], __WEBPACK_IMPORTED_MODULE_10__angular_platform_browser__["c" /* DomSanitizer */]])
-    ], AccountsPage);
-    return AccountsPage;
-}(__WEBPACK_IMPORTED_MODULE_3__secure_items_secure_items__["a" /* SecureItemsPage */]));
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */], __WEBPACK_IMPORTED_MODULE_5__providers_keychain_keychain__["a" /* KeychainProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */]])
+    ], SecureNotesPage);
+    return SecureNotesPage;
+}(__WEBPACK_IMPORTED_MODULE_2__secure_items_secure_items__["a" /* SecureItemsPage */]));
 
-//# sourceMappingURL=accounts.js.map
+//# sourceMappingURL=secure-notes.js.map
 
 /***/ }),
 
@@ -478,10 +457,10 @@ var AccountsPage = /** @class */ (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_validation_validation__ = __webpack_require__(269);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_validation_validation__ = __webpack_require__(268);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_localized_toast_localized_toast__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__password_generator_password_generator__ = __webpack_require__(209);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__schema_account__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__schema_account__ = __webpack_require__(150);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -576,7 +555,7 @@ var ItemEditorPage = /** @class */ (function () {
     };
     ItemEditorPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-item-editor',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/item-editor/item-editor.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-buttons start>\n      <button ion-button\n              (click)="dismiss()">\n          <span ion-text>{{ \'options.close\' | translate }}</span>\n        </button>\n    </ion-buttons>\n    <ion-buttons end>\n\n      <button ion-button\n              (click)="save()"\n              [disabled]="!(form.valid)">\n            <span ion-text>{{ \'options.save\' | translate }}</span>\n          </button>\n    </ion-buttons>\n    <ion-title>{{ addItem ? (\'options.add\' | translate) : (\'options.edit\' | translate) }}</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n  <form class="form"\n        [formGroup]="form">\n    <ion-item *ngFor="let property of properties">\n      <ion-label floating>{{ \'formTitles.\' + property | translate }}</ion-label>\n      <ion-input *ngIf="property !== \'body\'"\n                 [(ngModel)]="item[property]"\n                 type="text"\n                 [formControlName]="property"></ion-input>\n      <ion-buttons *ngIf="property === \'password\'"\n                   item-end\n                   middle>\n        <button (click)="presentPasswordGenerator(property)"\n                ion-fab\n                mini><ion-icon name="key"></ion-icon></button>\n      </ion-buttons>\n      <ion-textarea *ngIf="property === \'body\'"\n                    rows="8"\n                    [(ngModel)]="item[property]"\n                    type="text"\n                    [formControlName]="property"\n                    required></ion-textarea>\n\n    </ion-item>\n  </form>\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/item-editor/item-editor.html"*/,
+            selector: 'page-item-editor',template:/*ion-inline-start:"/Users/afshawnlotfi/Desktop/krossykey/src/pages/item-editor/item-editor.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-buttons start>\n      <button ion-button\n              (click)="dismiss()">\n          <span ion-text>{{ \'options.close\' | translate }}</span>\n        </button>\n    </ion-buttons>\n    <ion-buttons end>\n\n      <button ion-button\n              (click)="save()"\n              [disabled]="!(form.valid)">\n            <span ion-text>{{ \'options.save\' | translate }}</span>\n          </button>\n    </ion-buttons>\n    <ion-title>{{ addItem ? (\'options.add\' | translate) : (\'options.edit\' | translate) }}</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n  <form class="form"\n        [formGroup]="form">\n    <ion-item *ngFor="let property of properties">\n      <ion-label floating>{{ \'formTitles.\' + property | translate }}</ion-label>\n      <ion-input *ngIf="property !== \'body\'"\n                 [(ngModel)]="item[property]"\n                 type="text"\n                 [formControlName]="property"></ion-input>\n      <ion-buttons *ngIf="property === \'password\'"\n                   item-end\n                   middle>\n        <button (click)="presentPasswordGenerator(property)"\n                ion-fab\n                mini><ion-icon name="key"></ion-icon></button>\n      </ion-buttons>\n      <ion-textarea *ngIf="property === \'body\'"\n                    rows="8"\n                    [(ngModel)]="item[property]"\n                    type="text"\n                    [formControlName]="property"\n                    required></ion-textarea>\n\n    </ion-item>\n  </form>\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Desktop/krossykey/src/pages/item-editor/item-editor.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_4__providers_localized_toast_localized_toast__["a" /* LocalizedToastProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */]])
@@ -595,7 +574,7 @@ var ItemEditorPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PasswordGeneratorPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_password_generator_password_generator__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_password_generator_password_generator__ = __webpack_require__(283);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -641,7 +620,7 @@ var PasswordGeneratorPage = /** @class */ (function () {
     };
     PasswordGeneratorPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-password-generator',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/password-generator/password-generator.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>Password Generator</ion-title>\n\n    <ion-buttons start>\n      <button ion-button\n              (click)="dismiss()">\n            <span ion-text>{{ \'options.dismiss\' | translate }}</span>\n          </button>\n    </ion-buttons>\n    <ion-buttons end>\n      <button ion-button\n              (click)="setPassword(generatedPassword)">\n            <span ion-text>{{ \'options.set\' | translate }}</span>\n          </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <ion-list>\n\n    <ion-item>\n      <ion-label floating>{{ \'options.password\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="generatedPassword"></ion-input>\n    </ion-item>\n\n    <ion-item>\n      <ion-label floating>{{ \'options.options\' | translate }}</ion-label>\n      <ion-select [(ngModel)]="options"\n                  multiple="true"\n                  okText="{{ \'options.ok\' | translate }}"\n                  cancelText="{{ \'options.cancel\' | translate }}"\n                  (ngModelChange)="updatePassword()">\n        <ion-option value="special">{{ \'passwordOptions.special\' | translate }}</ion-option>\n        <ion-option value="numeric">{{ \'passwordOptions.numeric\' | translate }}</ion-option>\n        <ion-option value="upper">{{ \'passwordOptions.upper\' | translate }}</ion-option>\n        <ion-option value="lower">{{ \'passwordOptions.lower\' | translate }}</ion-option>\n      </ion-select>\n    </ion-item>\n\n    <br>\n\n    <ion-item>\n      <ion-range min="10"\n                 max="35"\n                 (ngModelChange)="updatePassword()"\n                 [(ngModel)]="passwordLength">\n        <ion-label range-left>{{ \'options.length\' | translate }}</ion-label>\n        <ion-label range-right>{{passwordLength}}</ion-label>\n      </ion-range>\n    </ion-item>\n\n\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/password-generator/password-generator.html"*/,
+            selector: 'page-password-generator',template:/*ion-inline-start:"/Users/afshawnlotfi/Desktop/krossykey/src/pages/password-generator/password-generator.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>Password Generator</ion-title>\n\n    <ion-buttons start>\n      <button ion-button\n              (click)="dismiss()">\n            <span ion-text>{{ \'options.dismiss\' | translate }}</span>\n          </button>\n    </ion-buttons>\n    <ion-buttons end>\n      <button ion-button\n              (click)="setPassword(generatedPassword)">\n            <span ion-text>{{ \'options.set\' | translate }}</span>\n          </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <ion-list>\n\n    <ion-item>\n      <ion-label floating>{{ \'options.password\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="generatedPassword"></ion-input>\n    </ion-item>\n\n    <ion-item>\n      <ion-label floating>{{ \'options.options\' | translate }}</ion-label>\n      <ion-select [(ngModel)]="options"\n                  multiple="true"\n                  okText="{{ \'options.ok\' | translate }}"\n                  cancelText="{{ \'options.cancel\' | translate }}"\n                  (ngModelChange)="updatePassword()">\n        <ion-option value="special">{{ \'passwordOptions.special\' | translate }}</ion-option>\n        <ion-option value="numeric">{{ \'passwordOptions.numeric\' | translate }}</ion-option>\n        <ion-option value="upper">{{ \'passwordOptions.upper\' | translate }}</ion-option>\n        <ion-option value="lower">{{ \'passwordOptions.lower\' | translate }}</ion-option>\n      </ion-select>\n    </ion-item>\n\n    <br>\n\n    <ion-item>\n      <ion-range min="10"\n                 max="35"\n                 (ngModelChange)="updatePassword()"\n                 [(ngModel)]="passwordLength">\n        <ion-label range-left>{{ \'options.length\' | translate }}</ion-label>\n        <ion-label range-right>{{passwordLength}}</ion-label>\n      </ion-range>\n    </ion-item>\n\n\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Desktop/krossykey/src/pages/password-generator/password-generator.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__providers_password_generator_password_generator__["a" /* PasswordGeneratorProvider */]])
     ], PasswordGeneratorPage);
@@ -656,24 +635,12 @@ var PasswordGeneratorPage = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SecureNotesPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NewKeychainPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__secure_items_secure_items__ = __webpack_require__(268);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__types_secure_note__ = __webpack_require__(523);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__schema_secure_note__ = __webpack_require__(279);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_keychain_keychain__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_component__ = __webpack_require__(100);
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_crypto_crypto__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__types_keychain__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_keychain_keychain__ = __webpack_require__(47);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -688,33 +655,51 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
 /**
- * Page for displaying passwords
+ * Generated class for the NewKeychainPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
  */
-var SecureNotesPage = /** @class */ (function (_super) {
-    __extends(SecureNotesPage, _super);
-    /**
-     * Intializes __SecureNotesPage__
-     * @param modalCtrl Modal Controller
-     * @param keychain Keychain Provider
-     */
-    function SecureNotesPage(modalCtrl, keychain, platform) {
-        var _this = _super.call(this, modalCtrl, keychain, __WEBPACK_IMPORTED_MODULE_4__schema_secure_note__["a" /* SECURE_NOTE_SCHEMA */], __WEBPACK_IMPORTED_MODULE_6__app_app_component__["c" /* StorageID */].secureNotes, platform) || this;
-        _this.objectDefaults = __WEBPACK_IMPORTED_MODULE_3__types_secure_note__["a" /* SECURE_NOTE_DEFAULT */];
-        return _this;
+var NewKeychainPage = /** @class */ (function () {
+    function NewKeychainPage(viewCtrl, crypto, keychainProvider) {
+        this.viewCtrl = viewCtrl;
+        this.crypto = crypto;
+        this.keychainProvider = keychainProvider;
+        this.passphrase = "";
+        this.keychainString = "";
     }
-    SecureNotesPage = __decorate([
+    NewKeychainPage.prototype.createKeychain = function (passphrase) {
+        var _this = this;
+        this.crypto.encryptObjectFromPhrase(passphrase, __WEBPACK_IMPORTED_MODULE_3__types_keychain__["a" /* KEYCHAIN_DEFAULT */]).then(function (encrypted) {
+            _this.viewCtrl.dismiss(encrypted);
+        });
+    };
+    NewKeychainPage.prototype.setKeychainfromRawText = function () {
+        this.viewCtrl.dismiss(this.keychainString);
+    };
+    NewKeychainPage.prototype.importKeychain = function (file) {
+        var _this = this;
+        if (file['path']) {
+            this.keychainProvider.setKeychainPath(file['path']);
+        }
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function () {
+            _this.viewCtrl.dismiss(reader.result);
+        };
+    };
+    NewKeychainPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-secure-notes',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/secure-notes/secure-notes.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button\n            menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n    <ion-buttons end\n                 [hidden]="(keychain.storageResp !== 3)">\n      <button ion-button\n              icon-start\n              (click)="addItem()">\n              <ion-icon name="add"></ion-icon>\n          </button>\n    </ion-buttons>\n    <ion-title>{{ \'titles.secureNotes\' | translate }}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-grid *ngFor="let itemGroupsName of itemGroupsNames(itemGroups)">\n    <h1>\n      {{itemGroupsName}}\n    </h1>\n    <ion-row>\n      <ion-col *ngFor="let item of itemGroups[itemGroupsName]"\n               col-12\n               col-sm-9\n               col-md-6\n               col-lg-4>\n        <ion-card>\n          <ion-item>\n\n            <ion-icon color="primary"\n                      item-start\n                      name="list-box"></ion-icon>\n\n            <h2>{{item.title}}</h2>\n\n          </ion-item>\n\n\n          <ion-fab right\n                   top>\n            <button ion-fab\n                    mini><ion-icon name="key"></ion-icon></button>\n\n            <ion-fab-list style="background-color: white;  box-shadow: -3px 3px 10px rgba(0, 0, 0, 0.1);"\n                          side="left">\n\n\n              <button ion-fab\n                      mini\n                      clear\n                      (click)="deleteItem(item)"> \n                                    <ion-icon name="trash"></ion-icon>\n                              </button>\n              <button ion-fab\n                      clear\n                      (click)="editItem(item)"> \n                                    <ion-icon name="create"></ion-icon>\n                              </button>\n              <button [hidden]="(shownItems[item.uuid] !== undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="showItem(item.uuid)"> \n                                      <ion-icon name="eye"></ion-icon>\n                                    </button>\n\n              <button [hidden]="(shownItems[item.uuid] === undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="hideItem(item.uuid)"> \n                                          <ion-icon name="eye-off"></ion-icon>\n                                        </button>\n\n\n            </ion-fab-list>\n          </ion-fab>\n\n          <ion-card-content>\n\n\n            <ion-list [hidden]="shownItems[item.uuid] === undefined">\n              <ion-list-header>\n                <h3>\n                  {{ \'formTitles.body\' | translate }}\n                </h3>\n              </ion-list-header>\n              <p style="white-space: pre-line;padding-left: 15px; padding-right: 15px">\n                {{item.body}}\n              </p>\n              <br>\n            </ion-list>\n\n          </ion-card-content>\n\n          <ion-row>\n\n\n            <ion-col col-lg-4>\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(item.body)">\n                <ion-icon name="paper"></ion-icon>\n                <div style = "padding-top: 3px">\n  \n                    {{ \'formTitles.body\' | translate }}\n                    </div>\n            </button>\n\n            </ion-col>\n\n          </ion-row>\n\n\n        </ion-card>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/secure-notes/secure-notes.html"*/,
+            selector: 'page-new-keychain',template:/*ion-inline-start:"/Users/afshawnlotfi/Desktop/krossykey/src/pages/new-keychain/new-keychain.html"*/'<!--\n  Generated template for the AuthenticatePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>Configure Keychain</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-list>\n\n    <ion-label>\n      <h3 style="text-align: center">Create Keychain</h3>\n    </ion-label>\n    <ion-item>\n      <ion-label floating>Passphrase</ion-label>\n      <ion-input type="password"\n                 [(ngModel)]="passphrase"></ion-input>\n    </ion-item>\n\n    <ion-item>\n      <button (click)="createKeychain(passphrase)"\n              [disabled]="passphrase.length === 0"\n              ion-button\n              full>Create</button>\n    </ion-item>\n\n    <br>\n\n    <ion-label>\n      <h5 style="text-align: center">OR</h5>\n    </ion-label>\n\n    <br>\n\n    <ion-label>\n      <h3 style="text-align: center">Import Keychain</h3>\n    </ion-label>\n\n    <ion-item>\n      <label for="file-upload"\n             ion-button\n             full>\n            Import\n         </label>\n      <input (change)="importKeychain($event.target.files[0])"\n             id="file-upload"\n             accept=".kk"\n             type="file" />\n    </ion-item>\n\n    <br>\n\n    <ion-label>\n      <h5 style="text-align: center">OR</h5>\n    </ion-label>\n\n    <br>\n\n    <ion-label>\n      <h3 style="text-align: center">Paste Keychain</h3>\n    </ion-label>\n\n\n    <ion-item>\n      <label for="file-upload"\n             ion-button\n             full>\n            Paste Keychain\n         </label>\n      <ion-textarea [(ngModel)]="keychainString"></ion-textarea>\n\n    </ion-item>\n    <ion-item>\n      <button (click)="setKeychainfromRawText()"\n              [disabled]="keychainString.length === 0"\n              ion-button\n              full>Load</button>\n    </ion-item>\n\n\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Desktop/krossykey/src/pages/new-keychain/new-keychain.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */], __WEBPACK_IMPORTED_MODULE_5__providers_keychain_keychain__["a" /* KeychainProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */]])
-    ], SecureNotesPage);
-    return SecureNotesPage;
-}(__WEBPACK_IMPORTED_MODULE_2__secure_items_secure_items__["a" /* SecureItemsPage */]));
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_crypto_crypto__["a" /* CryptoProvider */], __WEBPACK_IMPORTED_MODULE_4__providers_keychain_keychain__["a" /* KeychainProvider */]])
+    ], NewKeychainPage);
+    return NewKeychainPage;
+}());
 
-//# sourceMappingURL=secure-notes.js.map
+//# sourceMappingURL=new-keychain.js.map
 
 /***/ }),
 
@@ -724,7 +709,7 @@ var SecureNotesPage = /** @class */ (function (_super) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SettingsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_keychain_keychain__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_keychain_keychain__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_localized_toast_localized_toast__ = __webpack_require__(97);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -772,7 +757,7 @@ var SettingsPage = /** @class */ (function () {
     };
     SettingsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-settings',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/settings/settings.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button\n            menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n\n    <ion-title>{{ \'titles.settings\' | translate }}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-list>\n    <ion-list-header>\n      <h1>\n        {{ \'options.changePassword\' | translate }}\n      </h1>\n    </ion-list-header>\n\n    <ion-item>\n      <ion-label>{{ \'options.passwordOld\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="oldPass"\n                 type="password"></ion-input>\n    </ion-item>\n\n    <ion-item>\n      <ion-label>{{ \'options.passwordNew\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="newPass"\n                 type="password"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{ \'options.confirm\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="confPass"\n                 type="password"></ion-input>\n    </ion-item>\n\n    <br>\n\n    <button (click)="changePassword(oldPass,newPass)"\n            [disabled]="!(oldPass !== \'\' && newPass !== \'\' && newPass === confPass)"\n            ion-button\n            block>{{ \'options.changePassword\' | translate }}</button>\n    <br>\n\n    <button (click)="removeKeychain()"\n            ion-button\n            block>{{ \'options.removeKeychain\' | translate }}</button>\n    \n    <br>\n\n    <button (click)="exportKeychain()"\n            ion-button\n            block>{{ \'options.exportKeychain\' | translate }}</button>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/settings/settings.html"*/,
+            selector: 'page-settings',template:/*ion-inline-start:"/Users/afshawnlotfi/Desktop/krossykey/src/pages/settings/settings.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button\n            menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n\n    <ion-title>{{ \'titles.settings\' | translate }}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-list>\n    <ion-list-header>\n      <h1>\n        {{ \'options.changePassword\' | translate }}\n      </h1>\n    </ion-list-header>\n\n    <ion-item>\n      <ion-label>{{ \'options.passwordOld\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="oldPass"\n                 type="password"></ion-input>\n    </ion-item>\n\n    <ion-item>\n      <ion-label>{{ \'options.passwordNew\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="newPass"\n                 type="password"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{ \'options.confirm\' | translate }}</ion-label>\n      <ion-input [(ngModel)]="confPass"\n                 type="password"></ion-input>\n    </ion-item>\n\n    <br>\n\n    <button (click)="changePassword(oldPass,newPass)"\n            [disabled]="!(oldPass !== \'\' && newPass !== \'\' && newPass === confPass)"\n            ion-button\n            block>{{ \'options.changePassword\' | translate }}</button>\n    <br>\n\n    <button (click)="removeKeychain()"\n            ion-button\n            block>{{ \'options.removeKeychain\' | translate }}</button>\n    \n    <br>\n\n    <button (click)="exportKeychain()"\n            ion-button\n            block>{{ \'options.exportKeychain\' | translate }}</button>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Desktop/krossykey/src/pages/settings/settings.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_keychain_keychain__["a" /* KeychainProvider */], __WEBPACK_IMPORTED_MODULE_2__providers_localized_toast_localized_toast__["a" /* LocalizedToastProvider */]])
     ], SettingsPage);
@@ -783,136 +768,7 @@ var SettingsPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 212:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthenticatePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_keychain_keychain__ = __webpack_require__(53);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var AuthenticatePage = /** @class */ (function () {
-    /**
-     * Intializes EditPasswordPage
-     * @param viewCtrl View Controller
-     * @param navParams Navigation Parameters
-     */
-    function AuthenticatePage(keychainProvider, viewCtrl, navParams) {
-        this.keychainProvider = keychainProvider;
-        this.viewCtrl = viewCtrl;
-        this.navParams = navParams;
-        /**
-         * Passphrase to authenticate
-         */
-        this.passphrase = "";
-    }
-    /**
-     * Passes Passphrase to keychain
-     */
-    AuthenticatePage.prototype.passKeychain = function () {
-        this.viewCtrl.dismiss(this.passphrase);
-    };
-    /**
-     * Removes Keychain
-     */
-    AuthenticatePage.prototype.removeKeychain = function () {
-        this.keychainProvider.removeKeychain();
-        location.reload();
-    };
-    AuthenticatePage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-authenticate',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/authenticate/authenticate.html"*/'<!--\n  Generated template for the AuthenticatePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-buttons start>\n      <button ion-button\n              (click)="removeKeychain()">\n            <p ion-text>{{ \'options.remove\' | translate }}</p>\n          </button>\n    </ion-buttons>\n\n    <ion-buttons end>\n      <button ion-button\n              (click)="passKeychain()"\n              [disabled]="passphrase.length === 0">\n            <span ion-text>{{ \'options.unlock\' | translate }}</span>\n          </button>\n    </ion-buttons>\n    <ion-title>Unlock Keychain</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-list>\n\n    <ion-item>\n      <ion-label floating>Passphrase</ion-label>\n      <ion-input type="password"\n                 [(ngModel)]="passphrase"></ion-input>\n    </ion-item>\n\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/authenticate/authenticate.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_keychain_keychain__["a" /* KeychainProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
-    ], AuthenticatePage);
-    return AuthenticatePage;
-}());
-
-//# sourceMappingURL=authenticate.js.map
-
-/***/ }),
-
-/***/ 213:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NewKeychainPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_crypto_crypto__ = __webpack_require__(161);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__types_keychain__ = __webpack_require__(278);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(158);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-/**
- * Generated class for the NewKeychainPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var NewKeychainPage = /** @class */ (function () {
-    function NewKeychainPage(viewCtrl, crypto, storage) {
-        this.viewCtrl = viewCtrl;
-        this.crypto = crypto;
-        this.storage = storage;
-        this.passphrase = "";
-    }
-    NewKeychainPage.prototype.createKeychain = function (passphrase) {
-        var _this = this;
-        this.crypto.encryptObjectFromPhrase(passphrase, __WEBPACK_IMPORTED_MODULE_3__types_keychain__["a" /* KEYCHAIN_DEFAULT */]).then(function (encrypted) {
-            _this.viewCtrl.dismiss(encrypted);
-        });
-    };
-    NewKeychainPage.prototype.importKeychain = function (file) {
-        if (file['path']) {
-            this.storage.set('keychainFilePath', file['path']);
-        }
-        var reader = new FileReader();
-        reader.readAsText(file);
-        var viewCtrl = this.viewCtrl;
-        reader.onload = function () {
-            viewCtrl.dismiss(reader.result);
-        };
-    };
-    NewKeychainPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-new-keychain',template:/*ion-inline-start:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/new-keychain/new-keychain.html"*/'<!--\n  Generated template for the AuthenticatePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>Configure Keychain</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-list>\n\n    <ion-label>\n      <h3 style="text-align: center">Create Keychain</h3>\n    </ion-label>\n    <ion-item>\n      <ion-label floating>Passphrase</ion-label>\n      <ion-input type="password"\n                 [(ngModel)]="passphrase"></ion-input>\n    </ion-item>\n\n    <ion-item>\n      <button (click)="createKeychain(passphrase)"\n              [disabled]="passphrase.length === 0"\n              ion-button\n              full>Create</button>\n    </ion-item>\n\n    <br>\n\n    <ion-label>\n      <h5 style="text-align: center">OR</h5>\n    </ion-label>\n\n    <br>\n\n    <ion-label>\n      <h3 style="text-align: center">Import Keychain</h3>\n    </ion-label>\n\n    <ion-item>\n      <label for="file-upload"\n             ion-button\n             full>\n            Import\n         </label>\n      <input (change)="importKeychain($event.target.files[0])"\n             id="file-upload"\n             accept=".kk"\n             type="file" />\n    </ion-item>\n\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Documents/krossykey/krossykey/src/pages/new-keychain/new-keychain.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_crypto_crypto__["a" /* CryptoProvider */], __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]])
-    ], NewKeychainPage);
-    return NewKeychainPage;
-}());
-
-//# sourceMappingURL=new-keychain.js.map
-
-/***/ }),
-
-/***/ 223:
+/***/ 221:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -925,40 +781,36 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 223;
+webpackEmptyAsyncContext.id = 221;
 
 /***/ }),
 
-/***/ 267:
+/***/ 265:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"../pages/accounts/accounts.module": [
-		934,
-		6
-	],
 	"../pages/authenticate/authenticate.module": [
-		935,
+		934,
 		5
 	],
 	"../pages/item-editor/item-editor.module": [
-		936,
+		935,
 		4
 	],
 	"../pages/new-keychain/new-keychain.module": [
-		937,
+		936,
 		3
 	],
 	"../pages/password-generator/password-generator.module": [
-		938,
+		937,
 		2
 	],
 	"../pages/secure-notes/secure-notes.module": [
-		939,
+		938,
 		1
 	],
 	"../pages/settings/settings.module": [
-		940,
+		939,
 		0
 	]
 };
@@ -973,8 +825,21 @@ function webpackAsyncContext(req) {
 webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
-webpackAsyncContext.id = 267;
+webpackAsyncContext.id = 265;
 module.exports = webpackAsyncContext;
+
+/***/ }),
+
+/***/ 266:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KEYCHAIN_DEFAULT; });
+var KEYCHAIN_DEFAULT = {
+    accounts: [],
+    secureNotes: [],
+};
+//# sourceMappingURL=keychain.js.map
 
 /***/ }),
 
@@ -982,16 +847,83 @@ module.exports = webpackAsyncContext;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ValidationService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ajv__ = __webpack_require__(479);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ajv___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_ajv__);
+
+var ValidationService = /** @class */ (function () {
+    function ValidationService(schema, data) {
+        this.schema = schema;
+        this.data = data;
+        var ajv = new __WEBPACK_IMPORTED_MODULE_0_ajv___default.a(); // options can be passed, e.g. {allErrors: true}
+        this.validate = ajv.compile(schema);
+    }
+    Object.defineProperty(ValidationService.prototype, "isValid", {
+        get: function () {
+            this.validate(this.data);
+            return this.validate(this.data);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ValidationService.prototype.validateFor = function (data) {
+        this.validate(data);
+        return this.validate(data);
+    };
+    return ValidationService;
+}());
+
+//# sourceMappingURL=validation.js.map
+
+/***/ }),
+
+/***/ 276:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SECURE_NOTE_SCHEMA; });
+var SECURE_NOTE_SCHEMA = {
+    type: "object",
+    properties: {
+        title: {
+            type: "string",
+            minLength: 1
+        },
+        body: {
+            type: "string",
+            minLength: 1
+        },
+        url: {
+            type: "string",
+            minLength: 1
+        },
+        uuid: {
+            type: "string",
+            minLength: 1,
+            hidden: true
+        }
+    },
+    additionalProperties: false,
+    required: ["title", "body", "url", "uuid"]
+};
+//# sourceMappingURL=secure-note.js.map
+
+/***/ }),
+
+/***/ 282:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* unused harmony export KeychainAction */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SecureItemsPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_clipboard_polyfill__ = __webpack_require__(477);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_clipboard_polyfill__ = __webpack_require__(520);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_clipboard_polyfill___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_clipboard_polyfill__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__item_editor_item_editor__ = __webpack_require__(208);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_object_hash__ = __webpack_require__(512);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_object_hash__ = __webpack_require__(521);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_object_hash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_object_hash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_keychain_keychain__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__authenticate_authenticate__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__new_keychain_new_keychain__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_keychain_keychain__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__authenticate_authenticate__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__new_keychain_new_keychain__ = __webpack_require__(210);
 
 
 
@@ -1056,7 +988,7 @@ var SecureItemsPage = /** @class */ (function () {
                         return keychainUnlocked.then(function (isValid) {
                             if (isValid === __WEBPACK_IMPORTED_MODULE_3__providers_keychain_keychain__["b" /* StorageResponse */].SUCCESS) {
                                 _this.keychain.getKeychain(_this.storageID, passphrase).then(function (rawItems) {
-                                    if (item) {
+                                    if (item && rawItems) {
                                         switch (keychainAction) {
                                             case KeychainAction.ADD:
                                                 _this.rawItems = rawItems;
@@ -1223,41 +1155,7 @@ var SecureItemsPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 269:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ValidationService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ajv__ = __webpack_require__(478);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ajv___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_ajv__);
-
-var ValidationService = /** @class */ (function () {
-    function ValidationService(schema, data) {
-        this.schema = schema;
-        this.data = data;
-        var ajv = new __WEBPACK_IMPORTED_MODULE_0_ajv___default.a(); // options can be passed, e.g. {allErrors: true}
-        this.validate = ajv.compile(schema);
-    }
-    Object.defineProperty(ValidationService.prototype, "isValid", {
-        get: function () {
-            this.validate(this.data);
-            return this.validate(this.data);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    ValidationService.prototype.validateFor = function (data) {
-        this.validate(data);
-        return this.validate(data);
-    };
-    return ValidationService;
-}());
-
-//# sourceMappingURL=validation.js.map
-
-/***/ }),
-
-/***/ 277:
+/***/ 283:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1341,49 +1239,158 @@ var PasswordGeneratorProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 278:
+/***/ 284:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KEYCHAIN_DEFAULT; });
-var KEYCHAIN_DEFAULT = {
-    accounts: [],
-    secureNotes: [],
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountsPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__types_account__ = __webpack_require__(523);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__secure_items_secure_items__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__schema_account__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_keychain_keychain__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_component__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_notp__ = __webpack_require__(524);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_notp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_notp__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_thirty_two__ = __webpack_require__(611);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_thirty_two___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_thirty_two__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_qrcode__ = __webpack_require__(613);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_qrcode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_qrcode__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_platform_browser__ = __webpack_require__(51);
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-//# sourceMappingURL=keychain.js.map
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 
-/***/ }),
 
-/***/ 279:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SECURE_NOTE_SCHEMA; });
-var SECURE_NOTE_SCHEMA = {
-    type: "object",
-    properties: {
-        title: {
-            type: "string",
-            minLength: 1
-        },
-        body: {
-            type: "string",
-            minLength: 1
-        },
-        url: {
-            type: "string",
-            minLength: 1
-        },
-        uuid: {
-            type: "string",
-            minLength: 1,
-            hidden: true
+
+
+
+
+
+
+
+
+/**
+ * Page for displaying passwords
+ */
+var AccountsPage = /** @class */ (function (_super) {
+    __extends(AccountsPage, _super);
+    /**
+     * Intializes __PasswordsPage__
+     * @param modalCtrl Modal Controller
+     * @param keychain Keychain Provider
+     */
+    function AccountsPage(modalCtrl, keychain, platform, sanitizer) {
+        var _this = _super.call(this, modalCtrl, keychain, __WEBPACK_IMPORTED_MODULE_4__schema_account__["a" /* ACCOUNT_SCHEMA */], __WEBPACK_IMPORTED_MODULE_6__app_app_component__["c" /* StorageID */].accounts, platform) || this;
+        _this.sanitizer = sanitizer;
+        /**
+         * Two Factor step
+         */
+        _this.step = 30;
+        /**
+         * Barcode Images
+         */
+        _this.imgs = {};
+        /**
+         * Time remaining
+         */
+        _this.timeRemaining = 0;
+        /**
+         * Account defaults
+         */
+        _this.objectDefaults = __WEBPACK_IMPORTED_MODULE_2__types_account__["a" /* ACCOUNT_DEFAULT */];
+        _this.calcTimeRemaining();
+        return _this;
+    }
+    /**
+     * Generates Token from secret key
+     * @param twoFactorModel Model of Two Factor Identified
+     */
+    AccountsPage.prototype.generateToken = function (account) {
+        if (account.twoFactor) {
+            var unformatted = account.twoFactor.replace(/\W+/g, '').toUpperCase();
+            var bin = __WEBPACK_IMPORTED_MODULE_8_thirty_two___default.a.decode(unformatted);
+            return __WEBPACK_IMPORTED_MODULE_7_notp___default.a.totp.gen(bin);
         }
-    },
-    additionalProperties: false,
-    required: ["title", "body", "url", "uuid"]
-};
-//# sourceMappingURL=secure-note.js.map
+        else {
+            return NaN;
+        }
+    };
+    AccountsPage.prototype.loadPercentage = function (timeLeft) {
+        return ((this.step - timeLeft) / 30) * 100;
+    };
+    /**
+     * Generates QR Code
+     * @param twoFactor Two Factor Identified
+     */
+    AccountsPage.prototype.generateQrCode = function (account) {
+        var _this = this;
+        __WEBPACK_IMPORTED_MODULE_9_qrcode___default.a.toDataURL(this.barCodeUrl(account), function (err, imageUrl) {
+            if (imageUrl) {
+                _this.imgs[account.uuid] = imageUrl;
+            }
+        });
+    };
+    AccountsPage.prototype.calcTimeRemaining = function () {
+        var _this = this;
+        var date = new Date();
+        var epoch = date.getTime();
+        this.timeRemaining = this.step - Math.floor(epoch / 1000) % this.step;
+        setTimeout(function () {
+            _this.calcTimeRemaining();
+        }, 1000);
+    };
+    /**
+     * Shows barcode
+     * @param twoFactor Two Factor Identified
+     */
+    AccountsPage.prototype.showCredentials = function (account) {
+        this.generateQrCode(account);
+        this.showItem(account.uuid);
+    };
+    /**
+     * Barcode URL
+     * @param twoFactorModel Two Factor Identified Model
+     * @returns Bar code url
+     */
+    AccountsPage.prototype.barCodeUrl = function (account) {
+        if (account.twoFactor) {
+            return 'otpauth://totp/'
+                + encodeURI(account.userName || '')
+                + '?secret=' + account.twoFactor.replace(/[\s\.\_\-]+/g, '').toUpperCase()
+                + '&algorithm=' + ('SHA1')
+                + '&digits=' + (6)
+                + '&period=' + (this.step);
+        }
+    };
+    AccountsPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-accounts',template:/*ion-inline-start:"/Users/afshawnlotfi/Desktop/krossykey/src/pages/accounts/accounts.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button\n            menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-buttons end\n                 [hidden]="(keychain.storageResp !== 3)">\n      <button ion-button\n              icon-start\n              (click)="addItem()">\n            <ion-icon name="add"></ion-icon>\n        </button>\n    </ion-buttons>\n    <ion-title>{{ \'titles.accounts\' | translate }}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-grid *ngFor="let itemGroupsName of itemGroupsNames(itemGroups)">\n    <h1>\n      {{itemGroupsName}}\n    </h1>\n    <ion-row>\n      <ion-col *ngFor="let item of itemGroups[itemGroupsName]"\n               col-12\n               col-sm-9\n               col-md-6\n               col-lg-4>\n        <ion-card>\n          <ion-item>\n\n            <ion-icon color="primary"\n                      item-start\n                      name="person"></ion-icon>\n\n            <h2>{{item.title}}</h2>\n\n            <p>{{item.userName}}</p>\n\n          </ion-item>\n\n\n          <ion-fab right\n                   top>\n            <button ion-fab\n                    mini><ion-icon name="key"></ion-icon></button>\n\n            <ion-fab-list style="background-color: white;  box-shadow: -3px 3px 10px rgba(0, 0, 0, 0.1);"\n                          side="left">\n\n\n              <button ion-fab\n                      mini\n                      clear\n                      (click)="deleteItem(item)"> \n                                  <ion-icon name="trash"></ion-icon>\n                            </button>\n              <button ion-fab\n                      clear\n                      (click)="editItem(item)"> \n                                  <ion-icon name="create"></ion-icon>\n                            </button>\n              <button [hidden]="(shownItems[item.uuid] !== undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="showCredentials(item)"> \n                                    <ion-icon name="eye"></ion-icon>\n                                  </button>\n\n              <button [hidden]="(shownItems[item.uuid] === undefined)"\n                      ion-fab\n                      mini\n                      clear\n                      (click)="hideItem(item.uuid)"> \n                                        <ion-icon name="eye-off"></ion-icon>\n                                      </button>\n\n\n            </ion-fab-list>\n          </ion-fab>\n\n          <ion-card-content>\n\n\n\n            <ion-list [hidden]="shownItems[item.uuid] === undefined">\n              <ion-list-header>\n                <h3>\n                  {{ \'formTitles.password\' | translate }}\n                </h3>\n              </ion-list-header>\n              <p style="padding-left: 15px; padding-right: 15px">\n                {{item.password}}\n              </p>\n              <br>\n              <ion-list-header *ngIf="item.twoFactor">\n                <h3>\n                  {{ \'formTitles.twoFactor\' | translate }}\n                </h3>\n                <ion-item style="padding-top: -400px">\n                  <ion-thumbnail item-start>\n                    <img style="width: 200px; height: 200px"\n                         [src]="sanitizer.bypassSecurityTrustUrl(imgs[item.uuid] ? imgs[item.uuid] : \'\')" />\n                  </ion-thumbnail>\n                </ion-item>\n              </ion-list-header>\n            </ion-list>\n\n          </ion-card-content>\n\n          <ion-row>\n            <ion-col col-xs-4\n                     *ngIf="item.twoFactor">\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(generateToken(item))">\n                  <ion-icon name="lock"></ion-icon>\n                  <div style = "padding-top: 3px">\n\n                  {{ generateToken(item) }}\n                </div>\n\n                  <circle-progress style = "padding-top: 5px"\n                  [percent]="loadPercentage(timeRemaining)"\n                  title=""\n                  units=\'\'        \n                  [radius]="5"\n                  [animation]="false">\n        \n                </circle-progress>\n\n          </button>\n\n            </ion-col>\n\n            <ion-col col-xs-4>\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(item.userName)">\n              <ion-icon name="person"></ion-icon>\n              <div style = "padding-top: 3px">\n\n                  {{ \'formTitles.userName\' | translate }}\n                  </div>\n          </button>\n            </ion-col>\n            <ion-col col-xs-4>\n              <button ion-button\n                      icon-start\n                      clear\n                      small\n                      (click)="copyToClipboard(item.password)">\n              <ion-icon name="hand"></ion-icon>\n              <div style = "padding-top: 3px">\n\n                  {{ \'formTitles.password\' | translate }}\n                  </div>\n          </button>\n            </ion-col>\n\n\n          </ion-row>\n\n\n        </ion-card>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n\n\n</ion-content>\n'/*ion-inline-end:"/Users/afshawnlotfi/Desktop/krossykey/src/pages/accounts/accounts.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */], __WEBPACK_IMPORTED_MODULE_5__providers_keychain_keychain__["a" /* KeychainProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */], __WEBPACK_IMPORTED_MODULE_10__angular_platform_browser__["c" /* DomSanitizer */]])
+    ], AccountsPage);
+    return AccountsPage;
+}(__WEBPACK_IMPORTED_MODULE_3__secure_items_secure_items__["a" /* SecureItemsPage */]));
+
+//# sourceMappingURL=accounts.js.map
 
 /***/ }),
 
@@ -1407,29 +1414,29 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* unused harmony export createTranslateLoader */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(284);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_secure_notes_secure_notes__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_secure_notes_secure_notes__ = __webpack_require__(207);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_common_http__ = __webpack_require__(652);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ngx_translate_core__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ngx_translate_core__ = __webpack_require__(151);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ngx_translate_http_loader__ = __webpack_require__(653);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_item_editor_item_editor__ = __webpack_require__(208);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_ng_circle_progress__ = __webpack_require__(655);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_storage__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_keychain_keychain__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_storage__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_keychain_keychain__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__providers_localized_toast_localized_toast__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_authenticate_authenticate__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__providers_crypto_crypto__ = __webpack_require__(161);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_new_keychain_new_keychain__ = __webpack_require__(213);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_secure_storage__ = __webpack_require__(285);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_authenticate_authenticate__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__providers_crypto_crypto__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_new_keychain_new_keychain__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_secure_storage__ = __webpack_require__(323);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_settings_settings__ = __webpack_require__(211);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_password_generator_password_generator__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_password_generator_password_generator__ = __webpack_require__(283);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_password_generator_password_generator__ = __webpack_require__(209);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_accounts_accounts__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_accounts_accounts__ = __webpack_require__(284);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1492,7 +1499,6 @@ var AppModule = /** @class */ (function () {
                 }),
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */], {}, {
                     links: [
-                        { loadChildren: '../pages/accounts/accounts.module#AccountsPageModule', name: 'AccountsPage', segment: 'accounts', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/authenticate/authenticate.module#AuthenticatePageModule', name: 'AuthenticatePage', segment: 'authenticate', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/item-editor/item-editor.module#EditPasswordPageModule', name: 'ItemEditorPage', segment: 'item-editor', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/new-keychain/new-keychain.module#NewKeychainPageModule', name: 'NewKeychainPage', segment: 'new-keychain', priority: 'low', defaultHistory: [] },
@@ -1543,96 +1549,23 @@ function createTranslateLoader(http) {
 
 /***/ }),
 
-/***/ 476:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ACCOUNT_DEFAULT; });
-/**
- * Password model default
- */
-var ACCOUNT_DEFAULT = {
-    title: "",
-    userName: "",
-    password: "",
-    url: "",
-    twoFactor: "",
-    uuid: ""
-};
-//# sourceMappingURL=account.js.map
-
-/***/ }),
-
-/***/ 516:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KEYCHAIN_SCHEMA; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__account__ = __webpack_require__(157);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__secure_note__ = __webpack_require__(279);
-
-
-var KEYCHAIN_SCHEMA = {
-    type: "object",
-    properties: {
-        accounts: {
-            type: "array",
-            validateAllForSchema: __WEBPACK_IMPORTED_MODULE_0__account__["a" /* ACCOUNT_SCHEMA */]
-        },
-        secureNotes: {
-            type: "array",
-            validateAllForSchema: __WEBPACK_IMPORTED_MODULE_1__secure_note__["a" /* SECURE_NOTE_SCHEMA */]
-        },
-    },
-    additionalProperties: false,
-    required: ["accounts", "secureNotes"]
-};
-//# sourceMappingURL=keychain.js.map
-
-/***/ }),
-
-/***/ 523:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SECURE_NOTE_DEFAULT; });
-/**
- * Secure note model defualt
- */
-var SECURE_NOTE_DEFAULT = {
-    title: "",
-    body: "",
-    url: "",
-    uuid: ""
-};
-//# sourceMappingURL=secure-note.js.map
-
-/***/ }),
-
-/***/ 529:
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 53:
+/***/ 47:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return StorageResponse; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KeychainProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__types_keychain__ = __webpack_require__(278);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_validation_validation__ = __webpack_require__(269);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__schema_keychain__ = __webpack_require__(516);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__types_keychain__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_validation_validation__ = __webpack_require__(268);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__schema_keychain__ = __webpack_require__(513);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__localized_toast_localized_toast__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_app_component__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__crypto_crypto__ = __webpack_require__(161);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_secure_storage__ = __webpack_require__(285);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__crypto_crypto__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_secure_storage__ = __webpack_require__(323);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ionic_angular__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_downloadjs__ = __webpack_require__(524);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_downloadjs__ = __webpack_require__(634);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_downloadjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_downloadjs__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1818,7 +1751,19 @@ var KeychainProvider = /** @class */ (function () {
         var _this = this;
         return this.getRawKeychain().then(function (encrypted) {
             return _this.crypto.decryptStringFromPhrase(passphrase, encrypted).then(function (decrypted) {
-                return decrypted[storageID];
+                if (decrypted) {
+                    if (_this.keychainValidator.validateFor(decrypted)) {
+                        return decrypted[storageID];
+                    }
+                    else {
+                        _this.invalidKeychain();
+                        return null;
+                    }
+                }
+                else {
+                    _this.invalidKeychain();
+                    return null;
+                }
             });
         });
     };
@@ -1923,7 +1868,87 @@ var KeychainProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 531:
+/***/ 513:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return KEYCHAIN_SCHEMA; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__account__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__secure_note__ = __webpack_require__(276);
+
+
+var KEYCHAIN_SCHEMA = {
+    type: "object",
+    properties: {
+        accounts: {
+            type: "array",
+            validateAllForSchema: __WEBPACK_IMPORTED_MODULE_0__account__["a" /* ACCOUNT_SCHEMA */]
+        },
+        secureNotes: {
+            type: "array",
+            validateAllForSchema: __WEBPACK_IMPORTED_MODULE_1__secure_note__["a" /* SECURE_NOTE_SCHEMA */]
+        },
+    },
+    additionalProperties: false,
+    required: ["accounts", "secureNotes"]
+};
+//# sourceMappingURL=keychain.js.map
+
+/***/ }),
+
+/***/ 522:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SECURE_NOTE_DEFAULT; });
+/**
+ * Secure note model defualt
+ */
+var SECURE_NOTE_DEFAULT = {
+    title: "",
+    body: "",
+    url: "",
+    uuid: ""
+};
+//# sourceMappingURL=secure-note.js.map
+
+/***/ }),
+
+/***/ 523:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ACCOUNT_DEFAULT; });
+/**
+ * Password model default
+ */
+var ACCOUNT_DEFAULT = {
+    title: "",
+    userName: "",
+    password: "",
+    url: "",
+    twoFactor: "",
+    uuid: ""
+};
+//# sourceMappingURL=account.js.map
+
+/***/ }),
+
+/***/ 528:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 530:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 564:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -1937,20 +1962,13 @@ var KeychainProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 566:
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
 /***/ 97:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LocalizedToastProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngx_translate_core__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngx_translate_core__ = __webpack_require__(151);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(33);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
